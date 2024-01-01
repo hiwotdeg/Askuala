@@ -19,3 +19,40 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 server:
   port: 0
+
+#Actuator and circuit breaker
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      payment-service:
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 100
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+  timelimiter:
+    instances:
+      payment-service:
+        timeout-duration: 3s
+
+  retry:
+    instances:
+      payment-service:
+        max-attempts: 3
+        wait-duration: 5s

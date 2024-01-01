@@ -14,6 +14,11 @@ public class StudentPaymentInformationService {
     private final StudentPaymentInformationRepository paymentInformationRepository;
 
     public ResponseEntity<String> createPaymentInformation(StudentPaymentInformation studentPaymentInformation) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         paymentInformationRepository.save(studentPaymentInformation);
         return ResponseEntity.ok(String.format("Payment Information for Student Id: %s created", studentPaymentInformation.getStudentId()));
     }
