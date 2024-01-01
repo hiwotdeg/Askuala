@@ -33,7 +33,7 @@ public class StudentService {
                 .build();
 
         String response = webClientBuilder.build().post()
-                .uri("http://localhost:8081/api/payment/student")
+                .uri("http://Payment-Service/api/payment/student")
                 .bodyValue(paymentInformation)
                 .retrieve()
                 .bodyToMono(String.class)
