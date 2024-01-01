@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${JDBC_URL_ASQUALA_PAYMENT:jdbc:postgresql://localhost:5432/asquala_payment}
+    username: ${PGSQL_USER_NAME:postgres}
+    password: ${PGSQL_PASSWORD:password}
+
+server:
+  port: 8081

@@ -1,0 +1,44 @@
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# IntelliJ IDEA files
+.idea/
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+
+# Maven target directory
+**/target/
+
+# Spring Boot build artifact
+*.jar
+
+# Spring Boot IDE plugin
+sts4/
+
+# IDE-specific files
+.vscode/
+
+# Gradle files
+.gradle/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+
+# Spring Boot log file
+spring.log
+
+**/.*
+!.gitignore
+**/*.iml
+**/mvnw
+**/mvnw.cmd

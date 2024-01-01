@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${JDBC_URL_ASQUALA_ACADEMIC:jdbc:postgresql://localhost:5432/askuala_academic}
+    username: ${PGSQL_USER_NAME:postgres}
+    password: ${PGSQL_PASSWORD:password}
