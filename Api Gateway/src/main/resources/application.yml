@@ -1,0 +1,37 @@
+spring:
+  main:
+    web-application-type: reactive
+
+  application:
+    name: Api-Gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: Academic-Service
+          uri: lb://Academic-Service
+          predicates:
+            - Path=/api/academic/**
+
+        - id: Payment-Service
+          uri: lb://Payment-Service
+          predicates:
+            - Path=/api/payment/**
+
+        - id: Discovery-Server
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/web
+          filters:
+            - SetPath=/
+
+        - id: Discovery-Server-Static
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka

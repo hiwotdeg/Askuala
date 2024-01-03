@@ -21,6 +21,7 @@
         <module>Academic Service</module>
         <module>Payment Service</module>
         <module>Service Discovery</module>
+        <module>Api Gateway</module>
     </modules>
 
 
