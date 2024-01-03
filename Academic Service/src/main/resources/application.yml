@@ -32,6 +32,10 @@ management:
   endpoint:
     health:
       show-details: always
+  #Tracing
+  tracing:
+    sampling:
+      probability: 1.0
 
 resilience4j:
   circuitbreaker:
@@ -56,3 +60,6 @@ resilience4j:
       payment-service:
         max-attempts: 3
         wait-duration: 5s
+
+
+

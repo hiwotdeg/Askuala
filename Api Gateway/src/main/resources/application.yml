@@ -37,9 +37,15 @@ spring:
         jwt:
           issuer-uri: http://localhost:8282/realms/Microservice-Test-Realm
 
-
-
+#Service Discovery
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:password@localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka
+
+
+#Tracing
+management:
+  tracing:
+    sampling:
+      probability: 1.0

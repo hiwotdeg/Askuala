@@ -7,3 +7,10 @@ eureka:
 
 server:
   port: 8761
+
+
+#Tracing
+management:
+  tracing:
+    sampling:
+      probability: 1.0

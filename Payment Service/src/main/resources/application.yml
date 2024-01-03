@@ -22,3 +22,10 @@ eureka:
 
 server:
   port: 0
+
+
+#Tracing
+management:
+  tracing:
+    sampling:
+      probability: 1.0
