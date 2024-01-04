@@ -20,7 +20,7 @@ public class CreateStudentDto {
     private BigDecimal price;
 
     public CreateStudentDto(Student student) {
-        this.name = student.getName();
+        this.name = student.getFirstName();
         this.studentId = student.getStudentId();
         this.phoneNumber = student.getPhoneNumber();
         this.email = student.getEmail();

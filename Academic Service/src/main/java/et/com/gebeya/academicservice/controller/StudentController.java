@@ -1,44 +1,48 @@
 package et.com.gebeya.academicservice.controller;
 
-import et.com.gebeya.academicservice.dto.CreateStudentDto;
+import et.com.gebeya.academicservice.dto.StudentRequestDto;
+import et.com.gebeya.academicservice.model.Student;
 import et.com.gebeya.academicservice.service.StudentService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.retry.annotation.Retry;
-import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.CompletableFuture;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/academic/student")
-@RequiredArgsConstructor
+@RequestMapping("/asquala/student")
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Student", description = "The Student API. Contains the Student information.")
 public class StudentController {
-    private final StudentService studentService;
-
-/*@PostMapping
-    @CircuitBreaker(name = "payment-service", fallbackMethod = "fallBackMethod")
-    public ResponseEntity<CreateStudentDto> createStudent(@RequestBody CreateStudentDto createStudentDto) {
-        return studentService.createStudent(createStudentDto);
+  @Autowired
+  StudentService studentService;
+    @PostMapping("/addStudent")
+    public ResponseEntity<String> addStudent(@RequestBody Student student){
+        return studentService.addStudent(student);
     }
 
-    public ResponseEntity<CreateStudentDto> fallBackMethod(CreateStudentDto createStudentDto, RuntimeException runtimeException) {
-        return ResponseEntity.badRequest().body(createStudentDto);
-    }*/
-
-    @PostMapping
-    @CircuitBreaker(name = "payment-service", fallbackMethod = "fallBackMethod")
-    @TimeLimiter(name = "payment-service")
-    @Retry(name = "payment-service")
-    public CompletableFuture<ResponseEntity<CreateStudentDto>> createStudent(@RequestBody CreateStudentDto createStudentDto) {
-        return CompletableFuture.supplyAsync(() -> studentService.createStudent(createStudentDto));
+    @GetMapping("/getStudent/{id}")
+    public ResponseEntity<String> getStudentById(@PathVariable Long id){
+        return  studentService.getStudentById(id);
     }
 
-    public CompletableFuture<ResponseEntity<CreateStudentDto>> fallBackMethod(CreateStudentDto createStudentDto, RuntimeException runtimeException) {
-        return CompletableFuture.supplyAsync(() -> ResponseEntity.badRequest().body(createStudentDto));
+
+    @GetMapping("/getStudent")
+    public Iterable<Student> getAllStudent(){
+
+        return studentService.getAllStudent();
     }
+
+    @PutMapping("/updateStudent/{studentId}")
+    public ResponseEntity<String> updateStudent( @ModelAttribute Long studentId , @RequestBody Student student){
+        return studentService.updateStudent(studentId,student);
+    }
+    @DeleteMapping("/deleteStudent/{studentId}")
+    public ResponseEntity<String> deleteStudent(@ModelAttribute Long studentId){
+
+        return studentService.deleteStudent(studentId);
+    }
+
+
+
 }

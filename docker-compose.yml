@@ -1,0 +1,76 @@
+version: '3'
+services:
+  database:
+    container_name: asqaula_postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: asquala
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - asquala-net
+
+  service-discovery:
+    build:
+      context: ./microservice1
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+
+  academic-service:
+    build:
+      context: ./academic-service
+      dockerfile: Dockerfile
+    ports:
+      - target: 0
+        published: 0
+    networks:
+      - asquala-net
+    depends_on:
+      - service-discovery
+
+  payment-service:
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile
+    ports:
+      - target: 0
+        published: 0
+    networks:
+      - asquala-net
+    depends_on:
+      - service-discovery
+
+  asquala-com-service:
+    build:
+      context: ./asquala-com-service
+      dockerfile: Dockerfile
+    ports:
+      - target: 0
+        published: 0
+    networks:
+      - asquala-net
+    depends_on:
+      - service-discovery
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8181:8181
+    networks:
+      - asquala-net
+    depends_on:
+      - service-discovery
+
+networks:
+  asquala-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
