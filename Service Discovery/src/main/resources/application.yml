@@ -8,6 +8,10 @@ eureka:
 server:
   port: 8761
 
+spring:
+  banner:
+    location: classpath:banner.txt
+
 
 #Tracing
 management:

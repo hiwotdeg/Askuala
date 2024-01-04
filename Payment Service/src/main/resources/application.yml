@@ -1,6 +1,8 @@
 spring:
   application:
     name: Payment-Service
+  banner:
+    location: classpath:banner.txt
   jpa:
     generate-ddl: true
     properties:
@@ -9,9 +11,12 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: ${JDBC_URL_ASQUALA_PAYMENT:jdbc:postgresql://localhost:5432/asquala_payment}
-    username: ${PGSQL_USER_NAME:postgres}
-    password: ${PGSQL_PASSWORD:password}
+#    url: ${JDBC_URL_ASQUALA_PAYMENT:jdbc:postgresql://localhost:5432/asquala_payment}
+#    username: ${PGSQL_USER_NAME:postgres}
+#    password: ${PGSQL_PASSWORD:password}
+    url: jdbc:postgresql://localhost:5432/asquala_payment
+    username: ${USER_NAME}
+    password: ${PASSWORD}
 
 
 #Service Discovery

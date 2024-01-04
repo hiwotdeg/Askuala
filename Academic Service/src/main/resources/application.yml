@@ -1,6 +1,18 @@
 spring:
   application:
     name: Academic-Service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+  banner:
+    location: classpath:banner.txt
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/askuala_academic
+    username: ${USER_NAME}
+    password: ${PASSWORD}
+
   jpa:
     generate-ddl: true
     properties:
@@ -8,17 +20,15 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-  datasource:
-    url: ${JDBC_URL_ASQUALA_ACADEMIC:jdbc:postgresql://localhost:5432/askuala_academic}
-    username: ${PGSQL_USER_NAME:postgres}
-    password: ${PGSQL_PASSWORD:password}
+
+
 #Service Discovery
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 server:
-  port: 0
+  ports: 0
 
 #Actuator and circuit breaker
 management:
@@ -63,3 +73,6 @@ resilience4j:
 
 
 
+#    url: ${JDBC_URL_ASQUALA_ACADEMIC:jdbc:postgresql://localhost:5432/askuala_academic}
+#    username: ${PGSQL_USER_NAME:postgres}
+#    password: ${PGSQL_PASSWORD:password}
