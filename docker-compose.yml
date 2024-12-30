@@ -15,40 +15,32 @@ services:
       - asquala-net
 
   service-discovery:
-    build:
-      context: ./microservice1
-      dockerfile: Dockerfile
+    image: $HARBOR_URL/kft-lab/service-discovery
     ports:
       - 8761:8761
+    networks:
+      - asquala-net
 
   academic-service:
-    build:
-      context: ./academic-service
-      dockerfile: Dockerfile
+    image: $HARBOR_URL/kft-lab/academic-service
     ports:
-      - target: 0
-        published: 0
+      - "0:0"
     networks:
       - asquala-net
     depends_on:
       - service-discovery
 
   payment-service:
-    build:
-      context: ./payment-service
-      dockerfile: Dockerfile
+    image: $HARBOR_URL/kft-lab/payment-service
     ports:
-      - target: 0
-        published: 0
+      - "0:0"
     networks:
       - asquala-net
     depends_on:
       - service-discovery
 
   api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
+    image: $HARBOR_URL/kft-lab/api-gateway
     ports:
       - 8181:8181
     networks:
