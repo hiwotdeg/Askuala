@@ -15,15 +15,13 @@ pipeline {
         stage('Dockerize') {
             steps {
                 script {
-                    echo 'Building docker images for all Spring PetClinic services...'
+                    echo 'Building docker images for all services...'
                     sh '''
                     # Build all services with the Docker context as the entire project
                     docker build -t $HARBOR_URL/kft-lab/Academic Service -f Academic Service/Dockerfile .
                     docker build -t $HARBOR_URL/kft-lab/Api Gateway -f Api Gateway/Dockerfile .
                     docker build -t $HARBOR_URL/kft-lab/Payment Service -f Payment Service/Dockerfile .
                     docker build -t $HARBOR_URL/kft-lab/Service Discovery -f Service Discovery/Dockerfile .
-          
-                   
                     '''
                 }
             }
@@ -39,7 +37,6 @@ pipeline {
                         docker push ${HARBOR_URL}/kft-lab/Api Gateway
                         docker push ${HARBOR_URL}/kft-lab/Payment Service
                         docker push ${HARBOR_URL}/kft-lab/Service Discovery
-                        
                     """
                 }
             }
@@ -47,19 +44,19 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploying Spring PetClinic services using Docker Compose...'
+                    echo 'Deploying using Docker Compose...'
                     sh '''
                     # Login to Harbor to allow Docker Compose to pull images
-                    echo '${HARBOR_PASSWORD}' | docker login ${HARBOR_URL} -u ${HARBOR_USERNAME} --password-stdin
-                    
+                    echo "${HARBOR_PASSWORD}" | docker login ${HARBOR_URL} -u ${HARBOR_USERNAME} --password-stdin
+
                     # Stop and remove any existing containers
-                    docker compose down
-                    
+                    docker-compose down
+
                     # Pull the latest images
-                    docker compose pull
-                    
+                    docker-compose pull
+
                     # Start the application in detached mode
-                    docker compose up -d
+                    docker-compose up -d
                     '''
                 }
             }
