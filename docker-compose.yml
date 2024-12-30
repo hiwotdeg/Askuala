@@ -45,18 +45,6 @@ services:
     depends_on:
       - service-discovery
 
-  asquala-com-service:
-    build:
-      context: ./asquala-com-service
-      dockerfile: Dockerfile
-    ports:
-      - target: 0
-        published: 0
-    networks:
-      - asquala-net
-    depends_on:
-      - service-discovery
-
   api-gateway:
     build:
       context: ./api-gateway
