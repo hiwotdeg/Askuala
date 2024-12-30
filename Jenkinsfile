@@ -18,10 +18,10 @@ pipeline {
                     echo 'Building docker images for all services...'
                     sh '''
                     # Build all services with the Docker context as the entire project
-                    docker build -t $HARBOR_URL/kft-lab/Academic Service -f Academic Service/Dockerfile .
-                    docker build -t $HARBOR_URL/kft-lab/Api Gateway -f Api Gateway/Dockerfile .
-                    docker build -t $HARBOR_URL/kft-lab/Payment Service -f Payment Service/Dockerfile .
-                    docker build -t $HARBOR_URL/kft-lab/Service Discovery -f Service Discovery/Dockerfile .
+                    docker build -t $HARBOR_URL/kft-lab/academic-service -f "Academic Service/Dockerfile" .
+                    docker build -t $HARBOR_URL/kft-lab/api-gateway -f "Api Gateway/Dockerfile" .
+                    docker build -t $HARBOR_URL/kft-lab/payment-service -f "Payment Service/Dockerfile" .
+                    docker build -t $HARBOR_URL/kft-lab/service-discovery -f "Service Discovery/Dockerfile" .
                     '''
                 }
             }
@@ -33,10 +33,10 @@ pipeline {
                     sh """
                         echo '${HARBOR_PASSWORD}' | docker login ${HARBOR_URL} -u ${HARBOR_USERNAME} --password-stdin
                         
-                        docker push ${HARBOR_URL}/kft-lab/Academic Service
-                        docker push ${HARBOR_URL}/kft-lab/Api Gateway
-                        docker push ${HARBOR_URL}/kft-lab/Payment Service
-                        docker push ${HARBOR_URL}/kft-lab/Service Discovery
+                        docker push ${HARBOR_URL}/kft-lab/academic-service
+                        docker push ${HARBOR_URL}/kft-lab/api-gateway
+                        docker push ${HARBOR_URL}/kft-lab/payment-service
+                        docker push ${HARBOR_URL}/kft-lab/service-discovery
                     """
                 }
             }
