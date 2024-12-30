@@ -1,12 +1,11 @@
-FROM openjdk:17
-
-# Set the working directory inside the container
+FROM maven:3.8.6-openjdk-17 as build
 WORKDIR /app
+COPY pom.xml /app
+COPY src /app/src
+RUN mvn clean package -DskipTests
 
-# Copy the JAR file into the container at /app
-COPY target/payment-service-0.0.1-SNAPSHOT.jar /app/app.jar
-
-# Specify the command to run on container startup
+FROM openjdk:17
+WORKDIR /app
+COPY --from=build /app/target/payment-service-0.0.1-SNAPSHOT.jar /app/app.jar
 CMD ["java", "-jar", "app.jar"]
-
 EXPOSE 0
