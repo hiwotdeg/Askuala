@@ -1,10 +1,10 @@
-FROM maven:3.9-jdk-17 as build
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml /app
 COPY src /app/src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17
+FROM eclipse-temurin:17
 WORKDIR /app
 COPY --from=build /app/target/academic-service-0.0.1-SNAPSHOT.jar /app/app.jar
 CMD ["java", "-jar", "app.jar"]
