@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>et.com.gebeya</groupId>
+    <groupId>org.springframework.samples</groupId>
     <name>asquala</name>
     <artifactId>asquala</artifactId>
     <version>1.0</version>
