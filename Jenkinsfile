@@ -17,11 +17,10 @@ pipeline {
                 script {
                     echo 'Building docker images for all services...'
                     sh '''
-                    # Build all services with the Docker context as the entire project
-                    docker build -t $HARBOR_URL/kft-lab/academic-service -f "Academic Service/Dockerfile" .
-                    docker build -t $HARBOR_URL/kft-lab/api-gateway -f "Api Gateway/Dockerfile" .
-                    docker build -t $HARBOR_URL/kft-lab/payment-service -f "Payment Service/Dockerfile" .
-                    docker build -t $HARBOR_URL/kft-lab/service-discovery -f "Service Discovery/Dockerfile" .
+                    docker build -t $HARBOR_URL/kft-lab/academic-service -f "Academic Service/Dockerfile" "Academic Service/"
+                    docker build -t $HARBOR_URL/kft-lab/api-gateway -f "Api Gateway/Dockerfile" "Api Gateway/"
+                    docker build -t $HARBOR_URL/kft-lab/payment-service -f "Payment Service/Dockerfile" "Payment Service/"
+                    docker build -t $HARBOR_URL/kft-lab/service-discovery -f "Service Discovery/Dockerfile" "Service Discovery/"
                     '''
                 }
             }
@@ -46,16 +45,9 @@ pipeline {
                 script {
                     echo 'Deploying using Docker Compose...'
                     sh '''
-                    # Login to Harbor to allow Docker Compose to pull images
                     echo "${HARBOR_PASSWORD}" | docker login ${HARBOR_URL} -u ${HARBOR_USERNAME} --password-stdin
-
-                    # Stop and remove any existing containers
                     docker-compose down
-
-                    # Pull the latest images
                     docker-compose pull
-
-                    # Start the application in detached mode
                     docker-compose up -d
                     '''
                 }
