@@ -10,7 +10,14 @@
         <version>3.2.1</version>
         <relativePath/>
     </parent>
-
+         
+    <repositories>
+        <repository>
+            <id>Askuala</id>
+            <url>https://github.com/hiwotdeg/Askuala/raw/main/</url>
+        </repository>
+    </repositories>
+         
     <groupId>org.springframework.samples</groupId>
     <name>asquala</name>
     <artifactId>asquala</artifactId>
